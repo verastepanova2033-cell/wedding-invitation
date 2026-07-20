@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Никита &amp; Вера — 01.10.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+<style>
+  @font-face{
+    font-family:'Script Thin Pen';
+    src:url('fonts/ScriptThinPen.ttf') format('truetype');
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  :root{
+    --cream:#efe8dc;
+    --cream-deep:#e3d9c9;
+    --paper:#fffef8;
+    --brown:#2f2218;
+    --brown-mid:#4a3428;
+    --brown-soft:#6b5346;
+    --ink:#2a211b;
+    --white:#fff;
+    --gold:#b89a6a;
+    --olive:#7a8562;
+    --dusty:#9aa3a8;
+    --charcoal:#3a3632;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit}
+
+  /* ---------- INTRO ---------- */
+  .intro{
+    background:#e9e4d8;
+    padding:clamp(28px,6vw,56px) 20px clamp(36px,7vw,56px);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .intro__flourish{
+    position:absolute;
+    pointer-events:none;
+    user-select:none;
+    left:50%;
+    top:14%;
+    transform:translateX(-50%) scale(.96);
+    width:min(96vw,640px);
+    height:auto;
+    max-height:55%;
+    object-fit:contain;
+    opacity:0;
+    z-index:0;
+    transition:
+      opacity 1.1s cubic-bezier(.22,1,.36,1),
+      transform 1.1s cubic-bezier(.22,1,.36,1);
+  }
+  body.is-ready .intro.is-visible .intro__flourish{
+    opacity:.52;
+    transform:translateX(-50%) scale(1);
+  }
+  .intro__photo-block{
+    position:relative;
+    z-index:1;
+    width:min(420px,90vw);
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+  }
+  .intro__names{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:clamp(2px,0.8vw,6px);
+    font-family:'Script Thin Pen',Georgia,'Times New Roman',serif;
+    font-size:clamp(56px,11vw,96px);
+    font-weight:400;
+    font-style:normal;
+    color:var(--brown);
+    letter-spacing:.02em;
+    line-height:.92;
+    margin:0 auto clamp(16px,3.5vw,28px);
+  }
+  .intro__name{
+    display:block;
+    white-space:nowrap;
+  }
+  .intro__name--second{
+    margin-left:clamp(18px,7vw,52px);
+  }
+  .intro__photo-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:493/744;
+    overflow:hidden;
+    background:#e9e4d8;
+  }
+  .intro__photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+    border-radius:0;
+    filter:none !important;
+    -webkit-filter:none !important;
+  }
+  .intro__text{
+    position:relative;
+    z-index:4;
+    width:min(380px,88vw);
+    margin:clamp(52px,11vw,88px) auto clamp(28px,5vw,44px);
+    padding:0 8px;
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    font-weight:300;
+    font-size:clamp(14px,2.35vw,17px);
+    line-height:1.65;
+    letter-spacing:.06em;
+    color:#6b5346;
+  }
+
+  /* ---------- WELCOME ---------- */
+  .welcome{
+    position:relative;
+    min-height:clamp(420px,72vh,680px);
+    padding:clamp(28px,6vw,48px) 20px clamp(32px,6vw,52px);
+    background:#2a2218;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+  }
+  .welcome__video{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center center;
+    filter:sepia(.18) contrast(1.1) brightness(.9);
+    pointer-events:none;
+    z-index:0;
+    transform:scale(1.06);
+  }
+  .welcome__shade{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(20,15,10,.42) 0%, transparent 20%, transparent 80%, rgba(20,15,10,.42) 100%),
+      linear-gradient(180deg, rgba(20,15,10,.28) 0%, transparent 28%, transparent 72%, rgba(20,15,10,.32) 100%);
+    z-index:1;
+    pointer-events:none;
+  }
+  .welcome__curtain-wrap{
+    position:absolute;
+    top:0;
+    height:100%;
+    width:min(46vw,420px);
+    overflow:hidden;
+    pointer-events:none;
+    z-index:2;
+    opacity:0;
+    transition:opacity 1s cubic-bezier(.22,1,.36,1);
+  }
+  .welcome__curtain-wrap--left{
+    left:0;
+    -webkit-mask-image:linear-gradient(to right,#000 35%,transparent 100%);
+    mask-image:linear-gradient(to right,#000 35%,transparent 100%);
+  }
+  .welcome__curtain-wrap--right{
+    right:0;
+    -webkit-mask-image:linear-gradient(to left,#000 35%,transparent 100%);
+    mask-image:linear-gradient(to left,#000 35%,transparent 100%);
+  }
+  .welcome__curtain{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+  }
+  .welcome__curtain-wrap--left .welcome__curtain{transform:scaleX(-1)}
+  .welcome__inner{position:relative;z-index:3;width:100%;max-width:1200px;margin:0 auto}
+  .welcome__logo{
+    display:block;
+    width:min(280px,70vw);
+    margin:0 auto clamp(12px,3vw,22px);
+  }
+  .welcome__card-wrap{
+    position:relative;
+    width:min(520px,92vw);
+    margin:0 auto;
+  }
+  .welcome__card-bg{
+    width:100%;
+    display:block;
+  }
+  .welcome__card-content{
+    position:absolute;
+    inset:12% 10% 14%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+    color:#342619;
+  }
+  .welcome__card-content p{
+    font-size:clamp(14px,2.2vw,20px);
+    line-height:1.75;
+    font-weight:300;
+  }
+  .welcome__date{
+    margin-top:clamp(18px,3vw,28px);
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:clamp(22px,4vw,28px);
+    letter-spacing:.04em;
+    color:#342619;
+  }
+
+  /* ---------- PROGRAM ---------- */
+  .program{
+    background:#e9e4d8;
+    padding:clamp(36px,6vw,56px) 0 clamp(24px,5vw,36px);
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .program__panel{
+    position:relative;
+    max-width:min(620px,94vw);
+    margin:0 auto;
+    padding:clamp(44px,8vw,60px) 20px;
+  }
+  .program__intro{
+    position:relative;
+    z-index:1;
+    max-width:560px;
+    margin:0 auto clamp(48px,8vw,72px);
+    padding:0 4px;
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    font-weight:300;
+    font-size:clamp(13px,2.2vw,15px);
+    line-height:1.65;
+    letter-spacing:.06em;
+    color:#6b5346;
+  }
+  .program__body{
+    position:relative;
+    z-index:1;
+    max-width:min(560px,92vw);
+    margin:0 auto;
+    padding:0 4px;
+  }
+  .program__list{
+    position:relative;
+  }
+  .program__item{
+    text-align:center;
+    padding:clamp(30px,5.5vw,44px) 0;
+    border-bottom:1px solid rgba(47,34,24,.18);
+  }
+  .program__item:first-child{
+    border-top:1px solid rgba(47,34,24,.18);
+  }
+  .program__time{
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;
+    font-size:clamp(44px,8.5vw,58px);
+    font-weight:400;
+    color:var(--brown);
+    line-height:1;
+    margin-bottom:clamp(10px,2vw,14px);
+    letter-spacing:.01em;
+  }
+  .program__label{
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:clamp(11px,2vw,13px);
+    line-height:1.5;
+    text-transform:lowercase;
+    letter-spacing:.1em;
+    color:var(--brown-mid);
+  }
+
+  /* ---------- LOCATION ---------- */
+  .location{
+    background:var(--brown);
+    color:var(--cream);
+    padding:clamp(80px,12vw,120px) 0 clamp(90px,14vw,130px);
+    position:relative;
+    overflow:hidden;
+    z-index:1;
+  }
+  .location__photo{
+    width:min(340px,82vw);
+    margin:0 auto 36px;
+    padding:12px 12px 28px;
+    background:var(--paper);
+    box-shadow:0 28px 50px -20px rgba(0,0,0,.5);
+    transform:rotate(-4deg);
+  }
+  .location__photo img{
+    width:100%;
+    aspect-ratio:16/10;
+    object-fit:cover;
+    object-position:center;
+    filter:sepia(.12);
+  }
+  .location__name{
+    text-align:center;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(26px,4.5vw,34px);
+    font-weight:500;
+    margin-bottom:8px;
+  }
+  .location__addr{
+    text-align:center;
+    font-size:clamp(13px,2.2vw,15px);
+    color:rgba(239,232,220,.75);
+    margin-bottom:34px;
+  }
+  .location__btn{
+    display:block;
+    width:min(320px,88vw);
+    margin:0 auto;
+    text-align:center;
+    background:var(--paper);
+    color:var(--brown);
+    text-decoration:none;
+    padding:16px 24px;
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    transition:opacity .25s;
+  }
+  .location__btn:hover{opacity:.8}
+
+  /* ---------- COUNTDOWN ---------- */
+  .countdown{
+    background:#e9e4d8;
+    color:var(--brown);
+    padding:clamp(70px,12vw,100px) 24px;
+    text-align:center;
+  }
+  .countdown__title{
+    font-family:'Script Thin Pen',Georgia,'Times New Roman',serif;
+    font-size:clamp(34px,6vw,52px);
+    letter-spacing:.04em;
+    text-transform:none;
+    margin-bottom:36px;
+    font-weight:400;
+    color:var(--brown);
+  }
+  .countdown__grid{
+    display:flex;justify-content:center;
+    gap:clamp(16px,4vw,40px);
+    flex-wrap:wrap;
+  }
+  .countdown__unit{min-width:72px}
+  .countdown__num{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(42px,8vw,64px);
+    font-weight:500;
+    line-height:1;
+    color:var(--brown);
+  }
+  .countdown__word{
+    font-family:'JetBrains Mono',monospace;font-weight:300;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    margin-top:10px;
+    color:var(--brown-mid);
+    opacity:.75;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal-child{
+    opacity:0;
+    transform:translateY(22px);
+    filter:blur(4px);
+    transition:
+      opacity .85s cubic-bezier(.22,1,.36,1),
+      transform .85s cubic-bezier(.22,1,.36,1),
+      filter .85s cubic-bezier(.22,1,.36,1);
+    transition-delay:calc(var(--d,0) * 1ms);
+  }
+  .reveal.is-visible .reveal-child,
+  body.is-ready .intro.is-visible .reveal-child{
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+  }
+  .welcome__video,
+  .welcome__shade,
+  .welcome__curtain-wrap{
+    opacity:0;
+    transition:opacity 1s cubic-bezier(.22,1,.36,1);
+  }
+  .welcome.is-visible .welcome__video{opacity:1;transition-delay:0ms}
+  .welcome.is-visible .welcome__shade{opacity:1;transition-delay:80ms}
+  .welcome.is-visible .welcome__curtain-wrap{opacity:.92;transition-delay:200ms}
+
+  @media (max-width:640px){
+    .welcome{
+      min-height:clamp(460px,78vh,720px);
+    }
+    .welcome__video{
+      transform:scale(1.12);
+      object-position:center 42%;
+    }
+    .welcome__shade{
+      background:
+        linear-gradient(90deg, rgba(20,15,10,.32) 0%, transparent 10%, transparent 90%, rgba(20,15,10,.32) 100%),
+        linear-gradient(180deg, rgba(20,15,10,.22) 0%, transparent 22%, transparent 78%, rgba(20,15,10,.26) 100%);
+    }
+    .welcome__curtain-wrap{
+      width:28vw;
+      opacity:0;
+    }
+    .welcome.is-visible .welcome__curtain-wrap{opacity:.78}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal-child,.intro__flourish,.welcome__video,.welcome__shade,.welcome__curtain-wrap{
+      opacity:1;transform:none;filter:none;transition:none;
+    }
+    .intro__flourish{transform:translateX(-50%)}
+    .welcome__video{transform:none}
+    .welcome__curtain-wrap{opacity:.78}
+  }
+</style>
+</head>
+<body>
+
+<section class="intro reveal">
+  <img class="intro__flourish" src="decor/tild3763-3431-4633-b030-383634316530_Love.svg" alt="" aria-hidden="true">
+  <div class="intro__names reveal-child" style="--d:280">
+    <span class="intro__name">Никита</span>
+    <span class="intro__name intro__name--second">Вера</span>
+  </div>
+  <div class="intro__photo-block">
+    <div class="intro__photo-wrap reveal-child" style="--d:620">
+      <img class="intro__photo" src="IMG_8632.png" alt="Никита и Вера">
+    </div>
+    <p class="intro__text reveal-child" style="--d:920">Мы женимся! И очень хотим<br>разделить этот день с вами!</p>
+  </div>
+</section>
+
+<section class="welcome reveal">
+  <video class="welcome__video" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback" aria-hidden="true">
+    <source src="https://static.tildacdn.com/vide3466-3230-4135-a531-346237376161/03105.mp4" type="video/mp4">
+  </video>
+  <div class="welcome__shade" aria-hidden="true"></div>
+  <div class="welcome__curtain-wrap welcome__curtain-wrap--left" aria-hidden="true">
+    <img class="welcome__curtain" src="https://static.tildacdn.com/tild3637-3732-4464-b731-626236363633/image_18.png" alt="">
+  </div>
+  <div class="welcome__curtain-wrap welcome__curtain-wrap--right" aria-hidden="true">
+    <img class="welcome__curtain" src="https://static.tildacdn.com/tild3637-3732-4464-b731-626236363633/image_18.png" alt="">
+  </div>
+  <div class="welcome__inner">
+    <img class="welcome__logo reveal-child" style="--d:420" src="https://static.tildacdn.com/tild3861-6665-4630-b939-323739653765/Welcome.svg" alt="Welcome">
+    <div class="welcome__card-wrap reveal-child" style="--d:720">
+      <img class="welcome__card-bg" src="https://static.tildacdn.com/tild6338-6336-4633-a533-376465313466/Rectangle_3.png" alt="">
+      <div class="welcome__card-content">
+        <p>С огромной радостью и большой любовью приглашаем вас разделить с нами трогательный и важный момент нашей жизни!</p>
+        <div class="welcome__date">1 октября 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="program reveal">
+  <div class="program__panel">
+    <p class="program__intro reveal-child" style="--d:0">Спойлер: в конце будет торт! А пока — план мероприятия</p>
+    <div class="program__body">
+      <div class="program__list">
+        <div class="program__item reveal-child" style="--d:140">
+          <div class="program__time">12:00</div>
+          <div class="program__label">роспись</div>
+        </div>
+        <div class="program__item reveal-child" style="--d:280">
+          <div class="program__time">16:00</div>
+          <div class="program__label">сбор гостей</div>
+        </div>
+        <div class="program__item reveal-child" style="--d:420">
+          <div class="program__time">17:00</div>
+          <div class="program__label">ужин</div>
+        </div>
+        <div class="program__item reveal-child" style="--d:560">
+          <div class="program__time">22:00</div>
+          <div class="program__label">праздничный торт</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="location reveal">
+  <div class="location__photo reveal-child" style="--d:0">
+    <img src="location.png" alt="Локация">
+  </div>
+  <div class="location__name reveal-child" style="--d:140">д. Новенькое</div>
+  <div class="location__addr reveal-child" style="--d:260">Михайловское сельское поселение, 28</div>
+  <a class="location__btn reveal-child" style="--d:380" href="https://yandex.ru/maps/?text=%D0%B4.%20%D0%9D%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C%D0%BA%D0%BE%D0%B5%20(%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5%20%D1%81%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BF%D0%BE%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5)%2C%2028" target="_blank" rel="noopener">посмотреть на карте</a>
+</section>
+
+<section class="countdown reveal">
+  <div class="countdown__title reveal-child" style="--d:0">До встречи осталось</div>
+  <div class="countdown__grid reveal-child" style="--d:180">
+    <div class="countdown__unit"><div class="countdown__num" id="cd-days">00</div><div class="countdown__word">дней</div></div>
+    <div class="countdown__unit"><div class="countdown__num" id="cd-hours">00</div><div class="countdown__word">часов</div></div>
+    <div class="countdown__unit"><div class="countdown__num" id="cd-mins">00</div><div class="countdown__word">минут</div></div>
+    <div class="countdown__unit"><div class="countdown__num" id="cd-secs">00</div><div class="countdown__word">секунд</div></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const intro = document.querySelector('.intro');
+
+  function showIntro(){
+    if(!intro) return;
+    intro.classList.add('is-visible');
+  }
+
+  if(reduced){
+    document.body.classList.add('is-ready');
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  } else {
+    requestAnimationFrame(() => {
+      document.body.classList.add('is-ready');
+      showIntro();
+    });
+  }
+
+  const items = document.querySelectorAll('.reveal:not(.intro)');
+  if(!('IntersectionObserver' in window)){
+    items.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  items.forEach(el => io.observe(el));
+})();
+
+(function(){
+  const target = new Date(2026, 9, 1, 12, 0, 0).getTime();
+  const elD = document.getElementById('cd-days');
+  const elH = document.getElementById('cd-hours');
+  const elM = document.getElementById('cd-mins');
+  const elS = document.getElementById('cd-secs');
+  function tick(){
+    let diff = target - Date.now();
+    if(diff < 0) diff = 0;
+    elD.textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
+    elH.textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+    elM.textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+    elS.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
